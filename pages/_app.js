@@ -7,7 +7,6 @@ export default function App({ Component, pageProps }) {
   {/* ページタイトル */}
   <title>Tone Assist</title>
 
-
 </Head>
   <Component {...pageProps} />
   </>

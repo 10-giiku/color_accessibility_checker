@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
+import { useState,useEffect } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,8 +14,15 @@ const geistMono = Geist_Mono({
 });
 
 export default function Home() {
+  const [email, setEmail] = useState("");
+  const [IsEmailValid, setIsEmailValid] = useState(false);
+  useEffect(() => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    setIsEmailValid(emailRegex.test(email));
+  }, [email]);
+  
   return (
-    <div className="  h-screen flex items-center justify-items-center p-8 pb-20 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    <div className="  h-screen flex items-center justify-items-center  font-[family-name:var(--font-geist-sans)]">
      <div className="flex-1 flex-col flex items-center justify-center gap-4 bg-white h-screen">
       
       <div >
@@ -33,13 +41,17 @@ export default function Home() {
 
 
       <div className="flex-1  flex-col flex items-center justify-center  bg-yellow-100 h-screen">
-      <div className="text-5xl text-black p-10">Sign In</div>
-      <form className="flex flex-col gap-4 w-80 ">
+      <form className="flex flex-col gap-4 w-80 rounded shadow-md p-8">
+        <div className="text-5xl text-black p-10">Sign In</div>
+      
       <div className="flex items-center gap-2 text-black">メールアドレス</div>
           <input
             type="email"
             placeholder="メールアドレス"
-            className="border border-black rounded px-4 py-2"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            required
+            className="border border-black rounded px-4 py-2 "
           />
           <div className="flex items-center gap-2 text-black">パスワード</div>
           <input
@@ -50,6 +62,7 @@ export default function Home() {
           <Link href="/signup" className="text-blue-600">Sign Up</Link>
           <button
             type="submit"
+            
             className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
           ><Link href="/home" className="text-white">Sign In</Link>
           </button>
