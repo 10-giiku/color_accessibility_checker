@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
+import Link from "next/link";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,17 +23,17 @@ export default function Home() {
           alt="Logo"
           width={100}
           height={100}
-          className="h-20 w-20"
+          className="h-30 w-34"
         />
         </div>
-        <h1 className="text-4xl font-bold text-blue-300">Color Accessibility Checker</h1>
-        <h2 className="text-xl text-blue-900">色覚バリアフリー チェッカー</h2>
+        <h1 className="text-4xl font-bold" style={{ color: 'rgb(30, 100, 175)' }}>Tone Assist</h1>
+        <h2 className="text-xl" style={{ color: 'rgb(30, 100, 175)' }}>色覚バリアフリー チェッカー</h2>
       </div>
 
 
 
       <div className="flex-1  flex-col flex items-center justify-center  bg-yellow-100 h-screen">
-      <div className="text-5xl text-black p-10">ログイン</div>
+      <div className="text-5xl text-black p-10">Sign In</div>
       <form className="flex flex-col gap-4 w-80 ">
       <div className="flex items-center gap-2 text-black">メールアドレス</div>
           <input
@@ -46,11 +47,11 @@ export default function Home() {
             placeholder="パスワード"
             className="border border-black rounded px-4 py-2"
           />
+          <Link href="/signup" className="text-blue-600">Sign Up</Link>
           <button
             type="submit"
             className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-          >
-            ログイン
+          ><Link href="/home" className="text-white">Sign In</Link>
           </button>
         </form>
       </div>
