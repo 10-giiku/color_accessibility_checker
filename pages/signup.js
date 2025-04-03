@@ -6,18 +6,7 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
 
-    // 簡易的なバリデーション
-    if (password !== confirmPassword) {
-      alert("パスワードが一致しません");
-      return;
-    }
-
-    // サーバーに送信する処理をここに記述
-    alert(`アカウント作成成功: ${email}`);
-  };
 return (
     <div className="h-screen flex items-center justify-center bg-white">
       <div className="flex-1 flex-col flex items-center justify-center gap-4  h-screen">
