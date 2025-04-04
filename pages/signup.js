@@ -1,14 +1,16 @@
 import { useState } from "react";
 import React from "react";
 import Image from "next/image";
+import { supabase } from "../lib/supabase";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault(); // フォームのデフォルト動作を防ぐ
 
     if (password !== confirmPassword) {
@@ -21,9 +23,21 @@ export default function Signup() {
       return;
     }
 
-    setErrorMessage(""); // エラーがない場合はリセット
-    // アカウント作成処理をここに追加
-    console.log("アカウント作成成功");
+    setErrorMessage("");
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+
+    if (error) {
+      setErrorMessage(error.message);
+    } else {
+      setSuccessMessage("登録が完了しました！確認メールをチェックしてください。");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+    }
   };
 
   return (
@@ -48,7 +62,7 @@ export default function Signup() {
       <div className="flex-1 flex-col flex items-center justify-center bg-yellow-100 h-screen">
         <div className="text-5xl text-black p-10">Sign Up</div>
         <form
-          className="flex flex-col gap-4 w-80 p-6 rounded" // shadow-md 使ってもよさそう
+          className="flex flex-col gap-4 w-80 p-6 rounded" // shadow-md を追加してもいいかも
           onSubmit={handleSubmit}
         >
           <div className="flex items-center gap-2 text-black">メールアドレス</div>
@@ -80,6 +94,9 @@ export default function Signup() {
           />
           {errorMessage && (
             <div className="text-red-500 text-sm">{errorMessage}</div>
+          )}
+          {successMessage && (
+            <div className="text-green-500 text-sm">{successMessage}</div>
           )}
           <button
             type="submit"
