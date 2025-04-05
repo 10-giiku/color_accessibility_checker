@@ -75,18 +75,18 @@ export default function Login() {
           onChange={(e) => setEmail(e.target.value)}
           value={email}
           required
-          className="border border-black rounded p-2 placeholder-black w-full"
+          className="border border-black rounded p-2 placeholder-black w-full text-black"
         /></div>
         <div className="mb-4">
         <div className="flex items-center  text-black m-2">パスワード</div>
         <input
           type="password"
           placeholder="パスワード"
-          className="border border-black rounded px-4 py-2  placeholder-black w-full"
+          className="border border-black rounded px-4 py-2  placeholder-black w-full text-black"
           /></div>
         <div className="text-blue-600 font-semibold hover:underline"><Link href="/signup">Sign Up</Link></div>
         
-          <button type="submit" className="   py-2 px-4 rounded hover:bg-blue-900 items-center" style={{backgroundColor:'rgb(0, 115, 230)'}}><Link href="/home" className="text-white">Sign In
+          <button type="submit" className="py-2 px-4 rounded hover:bg-blue-900 items-center" style={{backgroundColor:'rgb(0, 115, 230)'}}><Link href="/home" className="text-white">Sign In
         </Link></button>
       </form>
     </div>
