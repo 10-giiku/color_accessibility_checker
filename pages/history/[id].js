@@ -9,30 +9,30 @@ export default function HistoryDetail() {
   const { id } = router.query;
   const [record, setRecord] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [publicImageUrl, setPublicImageUrl] = useState(null); // 追加
+  const [publicImageUrl, setPublicImageUrl] = useState(null);
 
   useEffect(() => {
     if (!id) return;
+
     async function fetchDetail() {
       const { data, error } = await supabase
         .from('history_checks')
         .select('*')
         .eq('id', id)
         .single();
+
       if (!error) {
         setRecord(data);
 
+        // image_urlがある場合、公開URLを取得してセット
         if (data.image_url) {
-          const { data: imageData } = supabase
-            .storage
-            .from('api-get-image') // バケット名（必要に応じて変更してね）
-            .getPublicUrl(data.image_url);
-
-          setPublicImageUrl(imageData.publicUrl);
+          setPublicImageUrl(data.image_url);  // 直接image_urlを表示するように修正
         }
       }
+
       setLoading(false);
     }
+
     fetchDetail();
   }, [id]);
 
