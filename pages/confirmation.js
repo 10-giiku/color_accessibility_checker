@@ -88,7 +88,7 @@ export default function Confirmation({ image }) {
                             boxSizing: 'border-box', // ボックスサイズを正確に計算
                         }}
                     >
-                        <img
+                        <Image
                             src={`/screenshots/${image}`}
                             alt="Latest Screenshot"
                             style={{
