@@ -11,7 +11,7 @@ export default function Home() {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const res = await fetch('/api/home', {
+        const res = await fetch("api/screenshot", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
