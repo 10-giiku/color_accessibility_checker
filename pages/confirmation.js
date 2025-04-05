@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
@@ -91,6 +92,8 @@ export default function Confirmation({ image }) {
                         <Image
                             src={`/screenshots/${image}`}
                             alt="Latest Screenshot"
+                            width={boxDimensions.width} // 必要に応じて幅を指定
+                            height={boxDimensions.height} // 必要に応じて高さを指定
                             style={{
                                 ...imageStyle,
                                 display: 'block', // 画像をブロック要素として扱う
@@ -98,7 +101,7 @@ export default function Confirmation({ image }) {
                                 padding: '0', // パディングをリセット
                                 border: 'none', // 画像のデフォルトの枠線を削除
                             }}
-                            onLoad={handleImageLoad} // 画像読み込み時に横幅を取得
+                            onLoadingComplete={handleImageLoad} // 画像読み込み時に横幅を取得
                         />
                     </div>
                 ) : (
