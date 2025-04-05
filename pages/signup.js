@@ -26,7 +26,6 @@ return (
       <div className="flex-1 flex-col flex items-center justify-center bg-yellow-100 h-screen">
         <div className="text-5xl text-black p-10">Sign Up</div>
       <form
-        onSubmit={handleSubmit}
         className="flex flex-col gap-4 w-80 p-6 rounded shadow-md "
       >
         <div className="flex items-center gap-2 text-black">メールアドレス</div>
