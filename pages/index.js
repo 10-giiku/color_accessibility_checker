@@ -87,7 +87,7 @@ export default function Login() {
           placeholder="パスワード"
           className="border border-black rounded px-4 py-2  placeholder-black w-full text-black"
           /></div>
-        <div className="font-semibold hover:underline" style={{ color: 'rgb(0, 115, 230)' }}><Link href="/signup">登録</Link></div>
+        <div className="font-semibold hover:underline" style={{ color: 'rgb(0, 115, 230)' }}><Link href="/signup">アカウント新規登録</Link></div>
         
           <button type="submit" className="py-2 px-4 rounded hover:bg-blue-900 items-center" style={{backgroundColor:'rgb(0, 115, 230)'}}><Link href="/home" className="text-white">ログイン
         </Link></button>

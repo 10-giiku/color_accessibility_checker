@@ -115,7 +115,7 @@ export default function Signup() {
             className="border text-black border-black rounded px-4 py-2  placeholder-black w-full"
             required
           /></div>
-          <div className="text-blue-600 font-semibold hover:underline"><Link href="/signup">← Sign In</Link></div>
+          <div className="text-blue-600 font-semibold hover:underline"><Link href="/signup">← ログイン</Link></div>
           <div className="mb-3">
           {errorMessage && (
             <div className="text-red-500 text-sm">{errorMessage}</div>
