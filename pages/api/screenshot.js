@@ -1,7 +1,5 @@
 const chromium = require("chrome-aws-lambda");
 const puppeteer = require("puppeteer-core");
-const fs = require("fs");
-const path = require("path");
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -26,11 +24,6 @@ export default async function handler(req, res) {
     await page.goto(url, { waitUntil: "networkidle2" });
 
     console.log("ページにアクセスしました:", url);
-
-    const screenshotsDir = path.join(process.cwd(), "public", "screenshots");
-    if (!fs.existsSync(screenshotsDir)) {
-      fs.mkdirSync(screenshotsDir, { recursive: true });
-    }
 
     const filename = `/tmp/screenshot-${Date.now()}.png`;
     await page.screenshot({ path: filename, fullPage: true });
