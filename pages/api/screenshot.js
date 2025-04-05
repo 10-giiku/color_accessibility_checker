@@ -9,16 +9,15 @@ export default async function handler(req, res) {
 
   const { url } = req.body;
 
-  // URLの表示
-  console.log('受け取ったURL:', url)
+  console.log("受け取ったURL:", url);
   if (!url || !url.startsWith("http")) {
     return res.status(400).json({ error: "有効なURLを入力してください" });
   }
 
   try {
     const browser = await puppeteer.launch({
-      headless: true, // ヘッドレスモードを有効化
-      args: ["--no-sandbox", "--disable-setuid-sandbox"], // 起動オプションを追加, フォント設定を有益化
+      headless: true,
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: "networkidle2" });

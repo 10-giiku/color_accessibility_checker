@@ -24,7 +24,8 @@ export default function Home() {
             });
 
             if (!response.ok) {
-                throw new Error(`HTTPエラー: ${response.status}`);
+                const errorData = await response.json();
+                throw new Error(errorData.error || `HTTPエラー: ${response.status}`);
             }
 
             const result = await response.json();
@@ -32,7 +33,7 @@ export default function Home() {
             router.push('/confirmation'); // 成功時に /confirmation へ遷移
         } catch (error) {
             console.error('エラーが発生しました:', error);
-            alert('エラーが発生しました。もう一度お試しください。');
+            alert(`エラーが発生しました: ${error.message}`);
         } finally {
             setIsLoading(false);
         }
