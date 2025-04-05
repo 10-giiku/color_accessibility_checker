@@ -12,10 +12,11 @@
     "@sparticuz/chromium": "^133.0.0",
     "@supabase/supabase-js": "^2.49.4",
     "autoprefixer": "^10.4.21",
+    "chrome-aws-lambda": "^10.1.0",
     "next": "15.2.4",
     "postcss": "^8.5.3",
     "puppeteer": "^24.6.0",
-    "puppeteer-core": "^24.6.0",
+    "puppeteer-core": "^10.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
