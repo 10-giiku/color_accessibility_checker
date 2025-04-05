@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Link from 'next/link';
+import { useState } from 'react';
 
 export default function Home() {
     const [url, setUrl] = useState('')
@@ -26,6 +27,7 @@ export default function Home() {
         
 <div className="flex-grow"><Header/>
 <form onSubmit={handleSubmit} style ={{ display: "mt-4", alianItems: "font-bold"}}>
+
                     <input
                         type="text"
                         value={url}
@@ -37,8 +39,10 @@ export default function Home() {
                         {/*<Link href="/confirmation">送信</Link>*/}送信
                     </button>
                 </form>
-
-        </div><Footer className="mt-auto"/>
+                )}
+            </div>
         </div>
-    )
+        <Footer className="mt-auto"/>
+    </div>
+    );
 }
