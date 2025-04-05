@@ -18,16 +18,12 @@ export default async function handler(req, res) {
   try {
     const browser = await puppeteer.launch({
       headless: true, // ヘッドレスモードを有効化
-      args: ["--no-sandbox", "--disable-setuid-sandbox", "--fontconfig"], // 起動オプションを追加, フォント設定を有益化
+      args: ["--no-sandbox", "--disable-setuid-sandbox"], // 起動オプションを追加, フォント設定を有益化
     });
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: "networkidle2" });
-    await page.waitForSelector("body"); // body 要素がレンダリングされるまで待機
 
-    // ページのテキストを取得
-    const pageText = await page.evaluate(() => {
-      return document.body.innerText; // ページ全体のテキストを取得
-    });
+    console.log("ページにアクセスしました:", url);
 
     const screenshotsDir = path.join(process.cwd(), "public", "screenshots");
     if (!fs.existsSync(screenshotsDir)) {
@@ -37,17 +33,17 @@ export default async function handler(req, res) {
     const filename = `screenshot-${Date.now()}.png`;
     const filepath = path.join(screenshotsDir, filename);
 
-
-    console.log("保存先ディレクトリ:", screenshotsDir);
-    console.log("保存するファイル名:", filename);
-
-
     await page.screenshot({ path: filepath, fullPage: true });
     await browser.close();
 
-    res.json({ message: "スクリーンショットを保存しました",  filename, text: pageText});
+    console.log("スクリーンショットを保存しました:", filepath);
+
+    res.json({
+      message: "スクリーンショットを保存しました",
+      filename,
+    });
   } catch (error) {
-    console.error(error.message);
+    console.error("サーバーエラー:", error); // エラー内容をログに出力
     res.status(500).json({ error: "スクリーンショットの取得に失敗しました" });
   }
 }
