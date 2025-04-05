@@ -32,7 +32,7 @@ export default function Home() {
     };
 
     return(
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-white">
         
         <div className="flex-grow">
             <Header/>
@@ -42,16 +42,18 @@ export default function Home() {
                         <p className="text-xl font-bold">解析中です。お待ちください...</p>
                     </div>
                 ) : (
-                <form onSubmit={handleSubmit}>
+            <><div className='text-black'>下記のBoxにURlを貼り付けてください</div>
+                <form onSubmit={handleSubmit} color={{ color: 'rgb(30, 100, 175)', backgroundColor: 'rgb(255, 255, 255)' }} className='border-radius: 8px mt-16 ' >
                     <input
                         type="text"
                         placeholder="URLを入力"
-                        style={{ width: '300px', padding: '8px' }}
+                        className='border-radius: 8px;'
+                        style={{ width: '300px', padding: '8px', color:'black ', border: '1px solid rgb(30, 100, 175)' }}
                     />
-                    <button type="submit" style={{ marginLeft: '10px', padding: '8px' }}>
-                        <Link href="/confirmation">送信</Link>
-                    </button>
-                </form>
+                    <Link href="/confirmation"><button type="submit" style={{ marginLeft: '10px', padding: '8px' ,color:'rgb(255, 255, 255)', backgroundColor: 'rgb(30, 100, 175)', borderRadius: '4px' }}>
+                        送信
+                    </button></Link>
+                </form></>
                 )}
             </div>
         </div>

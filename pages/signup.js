@@ -2,6 +2,7 @@ import { useState } from "react";
 import React from "react";
 import Image from "next/image";
 import { supabase } from "../lib/supabase";
+import Link from "next/link";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
@@ -41,66 +42,87 @@ export default function Signup() {
   };
 
   return (
-    <div className="h-screen flex items-center justify-center bg-white">
-      <div className="flex-1 flex-col flex items-center justify-center gap-4 h-screen">
-        <div>
-          <Image
-            src="/logo.png"
-            alt="Logo"
-            width={100}
-            height={100}
-            className="h-30 w-34"
-          />
-        </div>
-        <h1 className="text-4xl font-bold" style={{ color: "rgb(30, 100, 175)" }}>
-          Tone Assist
-        </h1>
-        <h2 className="text-xl" style={{ color: "rgb(30, 100, 175)" }}>
-          色覚バリアフリー チェッカー
-        </h2>
-      </div>
-      <div className="flex-1 flex-col flex items-center justify-center bg-yellow-100 h-screen">
-        <div className="text-5xl text-black p-10">Sign Up</div>
-        <form
-          className="flex flex-col gap-4 w-80 p-6 rounded" // shadow-md を追加してもいいかも
+    <div className="  h-screen flex items-center justify-items-center bg-white  font-[family-name:var(--font-geist-sans)]">
+    <div className="flex-1 flex-col flex items-center justify-center gap-4 h-screen">
+     
+     
+    <div
+   className="flex flex-col items-center justify-center"
+   style={{
+       backgroundColor: ' rgb(230, 242, 255)',
+       borderRadius: '50%',
+       width: '700px',
+       height: '700px', 
+       display: 'flex', 
+       alignItems: 'center',
+       justifyContent: 'center',
+       textAlign: 'center', 
+       padding: '20px', 
+   }}>
+     <div className="absolute bg-[rgb(230,242,255)] rounded-full w-30 h-30 -top-1 -left-3"></div>
+       <div className="text-6xl font-bold mb-10" style={{ color: 'rgb(0, 115, 230)' }}>Tone Assist</div>
+       <div className="text-xl leading-relaxed w-100 font-semibold mb-5" style={{ color: 'rgb(0, 115, 230)' }}>URLを入れると、そのサイトが色弱の人にも見やすいサイトかを評価します!</div>
+       <div className="text-xl font-semibold mb-5" style={{ color: 'rgb(0, 115, 230)' }}>履歴で、過去の評価を遡ることもできるよ！</div>
+       <div className="text-xl font-semibold mb-5" style={{ color: 'rgb(0, 115, 230)' }}>あなたの作ったサイトを誰にでも見やすいデザインにしよう！</div>
+       <div className="text-xl font-semibold" style={{ color: 'rgb(0, 115, 230)' }}>初めての方はユーザー登録からお願いします!</div>
+     </div>
+</div> 
+
+
+      <div className="flex-1 flex-col flex items-center justify-center h-screen">
+        <Image
+              src="/logo.png"
+              alt="Logo"
+              width={100}
+              height={100}
+              className="h-30 w-34 mb-5 mr-10"
+            />
+        
+        <form className="flex flex-col gap-4 w-96 rounded shadow-md p-8"
           onSubmit={handleSubmit}
         >
-          <div className="flex items-center gap-2 text-black">メールアドレス</div>
+          <div className="text-5xl text-black p-10 font-bold" style={{color:'rgb(0, 115, 230)' }}>Sign Up</div>
+          <div className="mb-4">       
+          <div className="mb-2 text-black">メールアドレス</div>
           <input
             type="email"
             placeholder="メールアドレス"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="border border-gray-300 rounded px-4 py-2"
+            className="border text-black border-black rounded p-2 placeholder-black w-full"
             required
-          />
-          <div className="flex items-center gap-2 text-black">パスワード</div>
+          /></div>   
+          <div className="mb-4">
+          <div className="flex items-center  text-black mb-2">パスワード</div>
           <input
             type="password"
             placeholder="パスワード"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="border border-gray-300 rounded px-4 py-2"
+            className="border text-black border-black rounded px-4 py-2  placeholder-black w-full"
             required
-          />
-          <div className="flex items-center gap-2 text-black">パスワード（確認用）</div>
+          /></div>
+          <div className="mb-4">
+          <div className="flex items-center  text-black mb-2">パスワード（確認用）</div>
           <input
             type="password"
             placeholder="パスワード（確認用）"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            className="border border-gray-300 rounded px-4 py-2"
+            className="border text-black border-black rounded px-4 py-2  placeholder-black w-full"
             required
-          />
+          /></div>
+          <div className="text-blue-600 font-semibold hover:underline"><Link href="/signup">← Sign In</Link></div>
+          <div className="mb-4">
           {errorMessage && (
             <div className="text-red-500 text-sm">{errorMessage}</div>
           )}
           {successMessage && (
             <div className="text-green-500 text-sm">{successMessage}</div>
-          )}
+          )}</div>
           <button
             type="submit"
-            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+            className="py-2 px-4 rounded hover:bg-blue-900 items-center text-white" style={{backgroundColor:'rgb(0, 115, 230)'}}
           >
             アカウント作成
           </button>
