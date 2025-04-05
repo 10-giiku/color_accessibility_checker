@@ -1,4 +1,5 @@
-const puppeteer = require("puppeteer");
+const chromium = require("chrome-aws-lambda");
+const puppeteer = require("puppeteer-core");
 const fs = require("fs");
 const path = require("path");
 
@@ -16,9 +17,11 @@ export default async function handler(req, res) {
 
   try {
     const browser = await puppeteer.launch({
-      headless: true,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      args: chromium.args,
+      executablePath: await chromium.executablePath,
+      headless: chromium.headless,
     });
+
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: "networkidle2" });
 
@@ -29,13 +32,11 @@ export default async function handler(req, res) {
       fs.mkdirSync(screenshotsDir, { recursive: true });
     }
 
-    const filename = `screenshot-${Date.now()}.png`;
-    const filepath = path.join(screenshotsDir, filename);
-
-    await page.screenshot({ path: filepath, fullPage: true });
+    const filename = `/tmp/screenshot-${Date.now()}.png`;
+    await page.screenshot({ path: filename, fullPage: true });
     await browser.close();
 
-    console.log("スクリーンショットを保存しました:", filepath);
+    console.log("スクリーンショットを保存しました:", filename);
 
     res.json({
       message: "スクリーンショットを保存しました",
