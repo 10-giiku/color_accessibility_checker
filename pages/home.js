@@ -3,7 +3,6 @@ import { useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Link from 'next/link';
-import { useState } from 'react';
 
 export default function Home() {
     const [url, setUrl] = useState('')
