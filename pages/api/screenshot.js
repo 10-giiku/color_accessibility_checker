@@ -29,7 +29,7 @@ export default async function handler(req, res) {
       return document.body.innerText; // ページ全体のテキストを取得
     });
 
-    const screenshotsDir = path.join(process.cwd(), "public", "screenshots");
+    const screenshotsDir = path.join(process.cwd(), "public", "tmp");
     if (!fs.existsSync(screenshotsDir)) {
       fs.mkdirSync(screenshotsDir, { recursive: true });
     }
