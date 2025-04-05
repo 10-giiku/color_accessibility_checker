@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import Image from 'next/image';
 
 export async function getStaticProps() {
     const fs = require('fs');
@@ -9,10 +10,15 @@ export async function getStaticProps() {
 
     // screenshotsフォルダのパス
     const screenshotsDir = path.join(process.cwd(), 'public', 'screenshots');
-    const files = fs.readdirSync(screenshotsDir);
 
-    // 画像ファイルのみをフィルタリング
-    const images = files.filter((file) => /\.(png|jpg|jpeg|gif)$/i.test(file));
+    // フォルダが存在しない場合は空の配列を返す
+    let images = [];
+    if (fs.existsSync(screenshotsDir)) {
+        const files = fs.readdirSync(screenshotsDir);
+
+        // 画像ファイルのみをフィルタリング
+        images = files.filter((file) => /\.(png|jpg|jpeg|gif)$/i.test(file));
+    }
 
     // ファイルの作成日時でソートして最新の1枚を取得
     const latestImage = images
@@ -96,12 +102,12 @@ export default function Confirmation({ image }) {
                             height={boxDimensions.height} // 必要に応じて高さを指定
                             style={{
                                 ...imageStyle,
-                                display: 'block', // 画像をブロック要素として扱う
-                                margin: '0', // 余白をリセット
-                                padding: '0', // パディングをリセット
-                                border: 'none', // 画像のデフォルトの枠線を削除
+                                display: 'block',
+                                margin: '0',
+                                padding: '0',
+                                border: 'none',
                             }}
-                            onLoadingComplete={handleImageLoad} // 画像読み込み時に横幅を取得
+                            onLoadingComplete={handleImageLoad} // 画像読み込み完了時に横幅を取得
                         />
                     </div>
                 ) : (
