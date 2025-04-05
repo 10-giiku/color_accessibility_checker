@@ -1,75 +1,50 @@
 import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { supabase } from '../lib/supabase';
 
-export async function getStaticProps() {
-    const fs = require('fs');
-    const path = require('path');
-
-    // screenshotsフォルダのパス
-    const screenshotsDir = path.join(process.cwd(), 'public', 'screenshots');
-
-    // フォルダが存在しない場合は空の配列を返す
-    let images = [];
-    if (fs.existsSync(screenshotsDir)) {
-        const files = fs.readdirSync(screenshotsDir);
-
-        // 画像ファイルのみをフィルタリング
-        images = files.filter((file) => /\.(png|jpg|jpeg|gif)$/i.test(file));
-    }
-
-    // ファイルの作成日時でソートして最新の1枚を取得
-    const latestImage = images
-        .map((file) => ({
-            file,
-            time: fs.statSync(path.join(screenshotsDir, file)).mtime.getTime(),
-        }))
-        .sort((a, b) => b.time - a.time)[0]?.file; // 最新のファイルを取得
-
-    return {
-        props: {
-            image: latestImage || null, // 最新の画像がない場合は null を返す
-        },
-    };
-}
-
-export default function Confirmation({ image }) {
+export default function Confirmation() {
+    const [imageUrl, setImageUrl] = useState(null);
     const [imageStyle, setImageStyle] = useState({});
     const [boxDimensions, setBoxDimensions] = useState({ width: 0, height: 0 });
 
     useEffect(() => {
-        // スクリーンサイズを取得して更新する関数
         const updateDimensions = () => {
-            let boxWidth = document.documentElement.clientWidth; // 現在のスクリーン横幅
-            if (boxWidth > 800) {
-                boxWidth = 800; // 最大横幅を800pxに制限
-            }
-            let boxHeight = boxWidth * 0.5; // 箱の高さを横幅の50%に設定
+            let boxWidth = document.documentElement.clientWidth;
+            if (boxWidth > 800) boxWidth = 800;
+            const boxHeight = boxWidth * 0.5;
             setBoxDimensions({ width: boxWidth, height: boxHeight });
         };
 
-        // 初期値を設定
         updateDimensions();
-
-        // リサイズイベントを監視
         window.addEventListener('resize', updateDimensions);
+        return () => window.removeEventListener('resize', updateDimensions);
+    }, []);
 
-        // クリーンアップ関数でイベントリスナーを削除
-        return () => {
-            window.removeEventListener('resize', updateDimensions);
-        };
+    useEffect(() => {
+        // Supabaseから最新の1件を取得
+        async function fetchLatestImage() {
+            const { data, error } = await supabase
+                .from('history_checks')
+                .select('image_url')
+                .order('created_at', { ascending: false })
+                .limit(1)
+                .single();
+
+            if (!error && data?.image_url) {
+                setImageUrl(data.image_url);
+            } else {
+                console.error('画像の取得に失敗:', error);
+            }
+        }
+        fetchLatestImage();
     }, []);
 
     const handleImageLoad = (img) => {
-        const imgWidth = img.naturalWidth; // 画像の元の横幅を取得
-        const imgHeight = img.naturalHeight; // 画像の元の高さを取得
-
-        // 箱の横幅に合わせて画像を拡大縮小
-        const scale = boxDimensions.width / imgWidth;
+        const scale = boxDimensions.width / img.naturalWidth;
         setImageStyle({
-            width: `${imgWidth * scale}px`,
-            height: `${imgHeight * scale}px`,
+            width: `${img.naturalWidth * scale}px`,
+            height: `${img.naturalHeight * scale}px`,
         });
     };
 
@@ -78,24 +53,24 @@ export default function Confirmation({ image }) {
             <Header />
             <div style={{ textAlign: 'center' }}>
                 <h1 style={{ padding: '20px' }}>最近アップロードされたスクリーンショット</h1>
-                {image ? (
+                {imageUrl ? (
                     <div
                         style={{
-                            width: `${boxDimensions.width}px`, // 箱の横幅を設定
-                            height: `${boxDimensions.height}px`, // 箱の高さを設定
-                            border: '1px solid #ccc', // 枠線を追加
-                            borderRadius: '8px', // 角を丸くする
-                            overflowY: 'auto', // 縦方向のスクロールを有効化
-                            overflowX: 'hidden', // 横方向のスクロールを無効化
-                            margin: '0 auto', // 中央揃え
-                            backgroundColor: '#f9f9f9', // 背景色を追加
-                            position: 'relative', // 相対位置を設定
-                            padding: '0', // パディングをリセット
-                            boxSizing: 'border-box', // ボックスサイズを正確に計算
+                            width: `${boxDimensions.width}px`,
+                            height: `${boxDimensions.height}px`,
+                            border: '1px solid #ccc',
+                            borderRadius: '8px',
+                            overflowY: 'auto',
+                            overflowX: 'hidden',
+                            margin: '0 auto',
+                            backgroundColor: '#f9f9f9',
+                            position: 'relative',
+                            padding: '0',
+                            boxSizing: 'border-box',
                         }}
                     >
                         <img
-                            src={`/screenshots/${image}`}
+                            src={imageUrl}
                             alt="Latest Screenshot"
                             style={{
                                 ...imageStyle,
@@ -104,7 +79,7 @@ export default function Confirmation({ image }) {
                                 padding: '0',
                                 border: 'none',
                             }}
-                            onLoad={(e) => handleImageLoad(e.target)} // 画像読み込み完了時に横幅を取得
+                            onLoad={(e) => handleImageLoad(e.target)}
                         />
                     </div>
                 ) : (

@@ -9,6 +9,7 @@ export default function HistoryDetail() {
   const { id } = router.query;
   const [record, setRecord] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [publicImageUrl, setPublicImageUrl] = useState(null); // 追加
 
   useEffect(() => {
     if (!id) return;
@@ -18,7 +19,18 @@ export default function HistoryDetail() {
         .select('*')
         .eq('id', id)
         .single();
-      if (!error) setRecord(data);
+      if (!error) {
+        setRecord(data);
+
+        if (data.image_url) {
+          const { data: imageData } = supabase
+            .storage
+            .from('api-get-image') // バケット名（必要に応じて変更してね）
+            .getPublicUrl(data.image_url);
+
+          setPublicImageUrl(imageData.publicUrl);
+        }
+      }
       setLoading(false);
     }
     fetchDetail();
@@ -43,12 +55,12 @@ export default function HistoryDetail() {
           <div className="border rounded-lg p-6 shadow bg-white">
             <p className="mb-2">日付: {formatDate(record.created_at)}</p>
             <p className="mb-4">
-              URL: <a href={record.url} target="_blank" className="text-blue-600 hover:underline">{record.url}</a>
+              URL: <a href={record.url} target="_blank" className="text-blue-600 hover:underline" rel="noopener noreferrer">{record.url}</a>
             </p>
             <div className="mb-6">
               <h2 className="font-semibold text-lg mb-2">読み取り画像</h2>
-              {record.image_url ? (
-                <img src={record.image_url} alt="Site snapshot" className="w-full h-auto rounded" />
+              {publicImageUrl ? (
+                <img src={publicImageUrl} alt="Site snapshot" className="w-full h-auto rounded" />
               ) : (
                 <p className="text-gray-500">画像がありません。</p>
               )}
