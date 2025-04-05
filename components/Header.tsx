@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function Header() {
     return (
-        <header className="flex items-center justify-between p-4 bg-gray-800 text-white">
+        <header className="flex items-center justify-between p-4 bg-gray-800 text-white "style={{ backgroundColor: 'rgb(30, 100, 175)' }}>
         <h1 className="text-2xl font-bold">Tone Assist</h1>
         <nav>
             <ul className="flex space-x-4">
