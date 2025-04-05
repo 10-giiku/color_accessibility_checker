@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Image from 'next/image';
 
 export async function getStaticProps() {
     const fs = require('fs');
