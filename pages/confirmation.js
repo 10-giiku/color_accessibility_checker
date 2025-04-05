@@ -61,12 +61,12 @@ export default function Confirmation({ image }) {
         };
     }, []);
 
-    const handleImageLoad = (e) => {
-        const imgWidth = e.target.naturalWidth; // 画像の元の横幅を取得
-        const imgHeight = e.target.naturalHeight; // 画像の元の高さを取得
+    const handleImageLoad = (img) => {
+        const imgWidth = img.naturalWidth; // 画像の元の横幅を取得
+        const imgHeight = img.naturalHeight; // 画像の元の高さを取得
 
         // 箱の横幅に合わせて画像を拡大縮小
-        const scale = Math.min(boxDimensions.width / imgWidth, boxDimensions.height / imgHeight);
+        const scale = boxDimensions.width / imgWidth;
         setImageStyle({
             width: `${imgWidth * scale}px`,
             height: `${imgHeight * scale}px`,
@@ -76,8 +76,8 @@ export default function Confirmation({ image }) {
     return (
         <div>
             <Header />
-            <div style={{ textAlign: 'center'}}>
-                <h1 style={{padding: '20px'}}>最近アップロードされたスクリーンショット</h1>
+            <div style={{ textAlign: 'center' }}>
+                <h1 style={{ padding: '20px' }}>最近アップロードされたスクリーンショット</h1>
                 {image ? (
                     <div
                         style={{
@@ -94,11 +94,9 @@ export default function Confirmation({ image }) {
                             boxSizing: 'border-box', // ボックスサイズを正確に計算
                         }}
                     >
-                        <Image
+                        <img
                             src={`/screenshots/${image}`}
                             alt="Latest Screenshot"
-                            width={boxDimensions.width} // 必要に応じて幅を指定
-                            height={boxDimensions.height} // 必要に応じて高さを指定
                             style={{
                                 ...imageStyle,
                                 display: 'block',
@@ -106,7 +104,7 @@ export default function Confirmation({ image }) {
                                 padding: '0',
                                 border: 'none',
                             }}
-                            onLoadingComplete={handleImageLoad} // 画像読み込み完了時に横幅を取得
+                            onLoad={(e) => handleImageLoad(e.target)} // 画像読み込み完了時に横幅を取得
                         />
                     </div>
                 ) : (

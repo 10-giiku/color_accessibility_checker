@@ -3,31 +3,37 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Link from 'next/link';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 export default function Home() {
 
     const [isLoading, setIsLoading] = useState(false); 
+    const [url, setUrl] = useState(''); // URL入力用のステートを追加
+    const router = useRouter();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsLoading(true); 
+        setIsLoading(true);
 
         try {
-            // APIリクエストを送信（例）
-            const response = await fetch('/api/analyze', {
+            const response = await fetch('/api/screenshot', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ data: 'example' }),
+                body: JSON.stringify({ url }), // URLを送信
             });
+
+            if (!response.ok) {
+                throw new Error(`HTTPエラー: ${response.status}`);
+            }
 
             const result = await response.json();
             console.log('解析結果:', result);
-            router.push('/confirmation');
-        
+            router.push('/confirmation'); // 成功時に /confirmation へ遷移
         } catch (error) {
             console.error('エラーが発生しました:', error);
-        
+            alert('エラーが発生しました。もう一度お試しください。');
         } finally {
-            setIsLoading(false); 
+            setIsLoading(false);
         }
     };
 
@@ -46,10 +52,13 @@ export default function Home() {
                     <input
                         type="text"
                         placeholder="URLを入力"
+                        value={url}
+                        onChange={(e) => setUrl(e.target.value)} // URL入力を更新
+                        required
                         style={{ width: '300px', padding: '8px' }}
                     />
-                    <button type="submit" style={{ marginLeft: '10px', padding: '8px' }}>
-                        <Link href="/confirmation">送信</Link>
+                    <button type="submit" disabled={isLoading} style={{ marginLeft: '10px', padding: '8px' }}>
+                        {isLoading ? '処理中...' : '送信'}
                     </button>
                 </form>
                 )}
