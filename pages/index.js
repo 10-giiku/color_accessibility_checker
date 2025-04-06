@@ -37,7 +37,7 @@ export default function Login() {
       </div>
 
       <div className="flex-1 flex flex-col items-center justify-center bg-yellow-100 h-screen">
-        <form onSubmit={handleLogin} className="flex flex-col gap-4 w-80 p-6 rounded">  {/* shadow-md を追加してもいいかも */}
+        <form className="flex flex-col gap-4 w-80 p-6 rounded">  {/* shadow-md を追加してもいいかも */}
           <div className="text-5xl text-black p-10">Sign In</div>
 
           <label className="text-black">メールアドレス</label>
@@ -64,7 +64,7 @@ export default function Login() {
 
           <Link href="/signup" className="text-blue-600">Sign Up</Link>
 
-          <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+          <button type="submit" onSubmit={handleLogin} className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
             Sign In
           </button>
         </form>

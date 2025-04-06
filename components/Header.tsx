@@ -1,12 +1,17 @@
-import React from 'react';
+import { useRouter } from 'next/router';
+import { supabase } from '../lib/supabase';
 import Link from 'next/link';
 
 export default function Header() {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    router.push('/');
+  };
+
   return (
-    <header
-      className="flex items-center justify-between p-4 bg-gray-800 text-white"
-      style={{ backgroundColor: 'rgb(30, 100, 175)' }}
-    >
+    <header className="flex items-center justify-between p-4 bg-gray-800 text-white" style={{ backgroundColor: 'rgb(30, 100, 175)' }}>
       <h1 className="text-2xl font-bold">
         <Link href="/home">Tone Assist</Link>
       </h1>
@@ -16,6 +21,9 @@ export default function Header() {
             <Link href="/mypage" className="hover:underline">
               Mypage
             </Link>
+            <button onClick={handleLogout} className="hover:underline ml-4">
+              Logout
+            </button>
           </li>
         </ul>
       </nav>
