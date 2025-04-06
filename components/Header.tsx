@@ -24,7 +24,7 @@ export default function Header() {
             <Link href="/mypage" className="hover:underline mr-10 font-semibold" style={{color:'rgb(0, 115, 230)'}}>
               Mypage
             </Link>
-            <button onClick={handleLogout} className="hover:underline ml-4">
+            <button onClick={handleLogout} className="hover:underline ml-4 font-semibold" style={{color:'rgb(0, 115, 230)' }}>
               Logout
             </button>
           </li>
