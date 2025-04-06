@@ -8,7 +8,7 @@ export async function getStaticProps() {
     const path = require('path');
 
     // screenshotsフォルダのパス
-    const screenshotsDir = path.join(process.cwd(), 'public', 'screenshots');
+    const screenshotsDir = path.join(process.cwd(), 'public', 'tmp');
 
     // フォルダが存在しない場合は空の配列を返す
     let images = [];
@@ -37,6 +37,8 @@ export async function getStaticProps() {
 export default function Confirmation({ image }) {
     const [imageStyle, setImageStyle] = useState({});
     const [boxDimensions, setBoxDimensions] = useState({ width: 0, height: 0 });
+    const [url, setUrl] = useState('');
+    const [report, setReport] = useState(null);
 
     useEffect(() => {
         // スクリーンサイズを取得して更新する関数
@@ -73,11 +75,32 @@ export default function Confirmation({ image }) {
         });
     };
 
+    const handleUrlChange = (e) => {
+        setUrl(e.target.value);
+    };
+
+    const handleCheckAccessibility = async () => {
+        try {
+            const res = await fetch(`/api/accessibility-check?url=${encodeURIComponent(url)}`);
+            const data = await res.json();
+
+            if (res.ok) {
+                setReport(data);
+            } else {
+                console.error(data.error);
+                setReport(null);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            setReport(null);
+        }
+    };
+
     return (
-        <div>
-            <Header />
-            <div style={{ textAlign: 'center' }}>
-                <h1 style={{ padding: '20px' }}>最近アップロードされたスクリーンショット</h1>
+        <div className='flex flex-col min-h-screen bg-white'>
+            <Header  className="fixed top-0 left-0 w-full z-10 bg-white shadow-md"/>
+            <div className="flex-grow pt-16 pb-16 p-4 overflow-y-auto text-center">
+                <h1 className='text-4xl font-bold pb-3 text-black'>最近アップロードされたスクリーンショット</h1>
                 {image ? (
                     <div
                         style={{
@@ -108,10 +131,21 @@ export default function Confirmation({ image }) {
                         />
                     </div>
                 ) : (
-                    <p>画像が見つかりませんでした。</p>
+                    <div className='font-bold text-3xl text-black'>画像が見つかりませんでした。</div>
                 )}
+            
+    <div>
+      <h1 className='m-10 font-bold text-3xl' >ウェブページのアクセシビリティチェック</h1>
+ 
+                 {report && (
+        <div>
+          <h2>チェック結果</h2>
+          <p>アクセシビリティスコア: {report.accessibilityScore}</p>
+          <p>背景色: {report.backgroundColor}</p>
+        </div>
+      )}</div>
             </div>
-            <Footer />
+            <Footer className="fixed bottom-0 left-0 w-full z-10 bg-white shadow-md"/>
         </div>
     );
 }

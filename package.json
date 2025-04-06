@@ -13,6 +13,8 @@
     "@supabase/supabase-js": "^2.49.4",
     "autoprefixer": "^10.4.21",
     "chrome-aws-lambda": "^1.20.4",
+    "chrome-launcher": "^1.1.2",
+    "lighthouse": "^12.5.1",
     "next": "15.2.4",
     "postcss": "^8.5.3",
     "puppeteer": "^24.6.0",
@@ -28,5 +30,21 @@
     "eslint": "^9",
     "eslint-config-next": "15.2.4",
     "tailwindcss": "^4.0.17"
-  }
+  },
+  "description": "This is a Next.js project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).",
+  "main": "tailwind.config.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/10-giiku/color_accessibility_checker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/10-giiku/color_accessibility_checker/issues"
+  },
+  "homepage": "https://github.com/10-giiku/color_accessibility_checker#readme"
 }
