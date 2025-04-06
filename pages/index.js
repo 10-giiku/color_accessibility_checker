@@ -66,7 +66,7 @@ export default function Login() {
       height={100}
       className="h-30 w-34 lg:mb-10 mb-6"
     />
-    <form className="flex flex-col gap-4 w-full max-w-md rounded shadow-md p-6 sm:p-8 ">
+       <form className="flex flex-col gap-4 w-full max-w-md rounded shadow-md p-6 sm:p-8" onSubmit={handleLogin}>
       <div className="mb-4">
       <div className="text-3xl lg:text-5xl text-black p-10 font-bold m-4 " style={{color:'rgb(0, 115, 230)' }}>ログイン</div>
       <div className=" text-black m-2">メールアドレス</div>
@@ -76,19 +76,20 @@ export default function Login() {
           onChange={(e) => setEmail(e.target.value)}
           value={email}
           required
-          className="border border-black rounded p-2 placeholder-black w-full "
+          className="border border-black rounded p-2 placeholder-black w-full text-black"
         /></div>
         <div className="mb-4">
         <div className="flex items-center  text-black m-2">パスワード</div>
         <input
           type="password"
           placeholder="パスワード"
+   onChange={(e) => setPassword(e.target.value)}
           className="border border-black rounded px-4 py-2  placeholder-black w-full text-black"
           /></div>
         <div className="font-semibold hover:underline" style={{ color: 'rgb(0, 115, 230)' }}><Link href="/signup">アカウント新規登録</Link></div>
         
-          <button type="submit" onSubmit={handleLogin} className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-            Sign In
+         <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+            ログイン
           </button>
       </form>
     </div>
