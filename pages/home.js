@@ -41,7 +41,6 @@ export default function Home() {
 
     return(
     <div className="flex flex-col min-h-screen bg-white">
-        
         <div className="flex-grow">
             <Header/>
             <div className="flex-grow p-4">
@@ -69,7 +68,7 @@ export default function Home() {
           <>    )}
            
         </div>
-        <Footer className="mt-auto"/>
+        <Footer className="mt-auto"/></div>
     </div>
     );
 }
