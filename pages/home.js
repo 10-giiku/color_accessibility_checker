@@ -49,26 +49,24 @@ export default function Home() {
                     <div className="flex items-center justify-center h-full">
                         <p className="text-xl font-bold">解析中です。お待ちください...</p>
                     </div>
-                ) : (
-            <><div className='text-black'>下記のBoxにURlを貼り付けてください</div>
-                <form onSubmit={handleSubmit} style={{ color: 'rgb(30, 100, 175)', backgroundColor: 'rgb(255, 255, 255)' }} className='border-radius: 8px mt-16 ' >
-                    <input
-                        type="text"
-                        placeholder="URLを入力"
-
-
-
-                        value={url}
-                        onChange={(e) => setUrl(e.target.value)} // URL入力を更新
-                        required
-                        style={{ width: '300px', padding: '8px', color:'black ', border: '1px solid rgb(30, 100, 175)' }}
-                    />
+                    ) : (
+            <>
+                <div className='text-black'>下記のBoxにURlを貼り付けてください</div>
+                    <form onSubmit={handleSubmit} style={{ color: 'rgb(30, 100, 175)', backgroundColor: 'rgb(255, 255, 255)' }} className='border-radius: 8px mt-16 ' >
+                        <input
+                            type="text"
+                            placeholder="URLを入力"
+                            value={url}
+                            onChange={(e) => setUrl(e.target.value)} // URL入力を更新
+                            required
+                            style={{ width: '300px', padding: '8px', color:'black ', border: '1px solid rgb(30, 100, 175)' }}
+                        />
                     <button type="submit" disabled={isLoading} style={{ marginLeft: '10px', padding: '8px' ,color:'rgb(255, 255, 255)'}}>
                         {isLoading ? '処理中...' : '送信'}
                     </button>
                 </form>
 
-             </div>  <>  )}
+            <>    )}</div>
            
         </div>
         <Footer className="mt-auto"/>
