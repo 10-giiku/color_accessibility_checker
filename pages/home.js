@@ -66,7 +66,7 @@ export default function Home() {
                     </button>
                 </form>
 
-            <>    )}</div>
+          <>    )}
            
         </div>
         <Footer className="mt-auto"/>
