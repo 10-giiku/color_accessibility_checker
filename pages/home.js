@@ -63,7 +63,7 @@ export default function Home() {
                         required
                         style={{ width: '300px', padding: '8px', color:'black ', border: '1px solid rgb(30, 100, 175)' }}
                     />
-                    <button type="submit" disabled={isLoading} style={{ marginLeft: '10px', padding: '8px' ,color:'rgb(255, 255, 255)’}}>
+                    <button type="submit" disabled={isLoading} style={{ marginLeft: '10px', padding: '8px' ,color:'rgb(255, 255, 255)'}}>
                         {isLoading ? '処理中...' : '送信'}
                     </button>
                 </form>
