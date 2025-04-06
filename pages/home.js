@@ -51,7 +51,7 @@ export default function Home() {
                     </div>
                 ) : (
             <><div className='text-black'>下記のBoxにURlを貼り付けてください</div>
-                <form onSubmit={handleSubmit} color={{ color: 'rgb(30, 100, 175)', backgroundColor: 'rgb(255, 255, 255)' }} className='border-radius: 8px mt-16 ' >
+                <form onSubmit={handleSubmit} style={{ color: 'rgb(30, 100, 175)', backgroundColor: 'rgb(255, 255, 255)' }} className='border-radius: 8px mt-16 ' >
                     <input
                         type="text"
                         placeholder="URLを入力"
