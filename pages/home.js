@@ -3,31 +3,39 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Link from 'next/link';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 export default function Home() {
 
     const [isLoading, setIsLoading] = useState(false); 
+    const [url, setUrl] = useState(''); // URL入力用のステートを追加
+    const router = useRouter();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsLoading(true); 
+        setIsLoading(true);
+        console.log('送信するURL:', url);
 
         try {
-            // APIリクエストを送信（例）
-            const response = await fetch('/api/analyze', {
+            const response = await fetch('/api/screenshot', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ data: 'example' }),
+                body: JSON.stringify({ url }), // URLを送信
             });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || `HTTPエラー: ${response.status}`);
+            }
 
             const result = await response.json();
             console.log('解析結果:', result);
-            router.push('/confirmation');
-        
+            router.push('/confirmation'); // 成功時に /confirmation へ遷移
         } catch (error) {
             console.error('エラーが発生しました:', error);
-        
+            alert(`エラーが発生しました: ${error.message}`);
         } finally {
-            setIsLoading(false); 
+            setIsLoading(false);
         }
     };
 
@@ -47,13 +55,19 @@ export default function Home() {
                     <input
                         type="text"
                         placeholder="URLを入力"
-                        className='border-radius: 8px;'
+
+
+
+                        value={url}
+                        onChange={(e) => setUrl(e.target.value)} // URL入力を更新
+                        required
                         style={{ width: '300px', padding: '8px', color:'black ', border: '1px solid rgb(30, 100, 175)' }}
                     />
-                    <Link href="/confirmation"><button type="submit" style={{ marginLeft: '10px', padding: '8px' ,color:'rgb(255, 255, 255)', backgroundColor: 'rgb(30, 100, 175)', borderRadius: '4px' }}>
-                        送信
-                    </button></Link>
-                </form></>
+                    <button type="submit" disabled={isLoading} style={{ marginLeft: '10px', padding: '8px' ,color:'rgb(255, 255, 255)}}>
+                        {isLoading ? '処理中...' : '送信'}
+                    </button>
+                </form>
+
                 )}
             </div>
         </div>
